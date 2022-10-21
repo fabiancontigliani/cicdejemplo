@@ -1,6 +1,18 @@
 #!/usr/bin/env groovy
 
+environment {
+    DOCKERHUB_CREDENTIALS=credentials('dockerhub-login')
+}
+
 node {
+
+    stage('Login') {
+
+        steps {
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        }
+    }
+
     stage('checkout') {
         checkout scm
     }
